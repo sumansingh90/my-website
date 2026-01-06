@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Baby | Cyber Overlord</title>
+
+<style>
+    body {
+        margin: 0;
+        background: black;
+        color: #00ff9c;
+        font-family: "Courier New", monospace;
+        overflow: hidden;
+    }
+
+    canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: -1;
+    }
+
+    header {
+        text-align: center;
+        padding: 40px;
+        font-size: 38px;
+        text-shadow: 0 0 20px #00ff9c;
+    }
+
+    .terminal {
+        width: 80%;
+        max-width: 700px;
+        margin: auto;
+        background: rgba(0,0,0,0.8);
+        border: 1px solid #00ff9c;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 0 25px #00ff9c;
+    }
+
+    .line {
+        margin: 8px 0;
+    }
+
+    .prompt {
+        color: #00ff9c;
+    }
+
+    .cmd {
+        color: white;
+    }
+
+    .blink {
+        animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+        0% { opacity: 1; }
+        50% { opacity: 0; }
+        100% { opacity: 1; }
+    }
+
+    footer {
+        text-align: center;
+        margin-top: 40px;
+        opacity: 0.6;
+    }
+</style>
+</head>
+
+<body>
+
+<canvas id="matrix"></canvas>
+
+<header>
+    SYSTEM BREACHED ☠️
+</header>
+
+<div class="terminal">
+    <div class="line"><span class="prompt">root@baby:~$</span> <span class="cmd" id="type1"></span></div>
+    <div class="line"><span class="prompt">root@baby:~$</span> <span class="cmd" id="type2"></span></div>
+    <div class="line"><span class="prompt">root@baby:~$</span> <span class="cmd" id="type3"></span></div>
+    <div class="line"><span class="prompt">root@baby:~$</span> <span class="cmd blink">█</span></div>
+</div>
+
+<footer>
+    © 2026 Baby | Ghost in the System 🕶️
+</footer>
+
+<script>
+/* Typing effect */
+const texts = [
+    "whoami",
+    "Baby — Cyber Entity Activated 😈",
+    "status: learning • hacking • dominating 💻🔥"
+];
+
+let index = 0;
+let char = 0;
+
+function typeEffect(id, text, speed = 80) {
+    const el = document.getElementById(id);
+    const interval = setInterval(() => {
+        el.innerHTML += text[char];
+        char++;
+        if (char >= text.length) {
+            clearInterval(interval);
+            char = 0;
+            index++;
+        }
+    }, speed);
+}
+
+setTimeout(() => typeEffect("type1", texts[0]), 500);
+setTimeout(() => typeEffect("type2", texts[1]), 2500);
+setTimeout(() => typeEffect("type3", texts[2]), 5000);
+
+/* Matrix rain */
+const canvas = document.getElementById("matrix");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const letters = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const fontSize = 16;
+const columns = canvas.width / fontSize;
+const drops = Array(Math.floor(columns)).fill(1);
+
+function drawMatrix() {
+    ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = "#00ff9c";
+    ctx.font = fontSize + "px monospace";
+
+    for (let i = 0; i < drops.length; i++) {
+        const text = letters.charAt(Math.floor(Math.random() * letters.length));
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+            drops[i] = 0;
+        }
+        drops[i]++;
+    }
+}
+
+setInterval(drawMatrix, 35);
+</script>
+
+</body>
+</html>
